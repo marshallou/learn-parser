@@ -1,0 +1,29 @@
+{
+  "name": "learn-parser",
+  "version": "1.0.0",
+  "description": "learn parser by using nodeJS",
+  "main": "index.js",
+  "dependencies": {
+    "mocha": "^5.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marshallou/learn-parser.git"
+  },
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha scheme_evaluator/tests/*.js"
+  },
+  "keywords": [
+    "parser"
+  ],
+  "author": "yiqiou",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/marshallou/learn-parser/issues"
+  },
+  "homepage": "https://github.com/marshallou/learn-parser#readme"
+}
