@@ -27,4 +27,11 @@ Decide to learn parser by using JS, since function in JS is first class and at t
 
 ### parser
 
-
+## reference
+https://github.com/jamiebuilds/the-super-tiny-compiler
+https://github.com/starkwang/naive-complier/
+JS regex: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions
+https://zhuanlan.zhihu.com/p/21830284
+https://zhuanlan.zhihu.com/p/24035780
+http://inst.eecs.berkeley.edu/~cs61a/fa13/proj/scheme/scheme.html
+http://composingprograms.com/pages/34-interpreters-for-languages-with-combination.html#expression-trees
