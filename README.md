@@ -22,9 +22,9 @@ Decide to learn parser by using JS, since function in JS is first class and at t
 ### mocha
   test file name convension .test.js
 
-### nodejs
+### JS/nodejs
   use "require" and "module.exports" to import file other JS files
-
+  regex.test search to see if patter exist. To match the whole string, we need to use ^ and $
 ### parser
 
 ## reference
