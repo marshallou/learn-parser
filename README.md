@@ -30,7 +30,25 @@ The second step is to convert the substring token into appropriate type. For sch
 
 At last, I find regex is extremely useful for tokenizer. Need to learn more about regex later.
 
-### 2.2  Syntactic analysis
+### 2.2  Parser, Syntactic analysis
+
+### 2.2.1 token stream and buffer
+Parser will take tokens and convert them into proper expressions, i.e data structures represented using Javascript. The problem is that tokenizer's input is a line and output is a list of tokens. But the expression is highly possible cross multiple lines.
+
+Thus, we need to create a buffer which accumulates tokens. When buffer is out of tokens, it will read more lines and calls tokenizer internally to store more tokens.
+
+Thus parser is decoupled from I/O related job and its input becomes a token stream. It is parser's job to understand tokens and group tokens to form expressions.
+
+### 2.2.2 parse
+As described, parser should have method called "parse". Each time "parse" is called, it returns one expression parsed from token stream. It will be called multiple times until we get EOF exception.
+
+### 2.2.3 data structures
+After parsing, all scheme expressions will be converted to Pair. But evaluator can create abstraction to represent different scheme expressions which decoupe the internal representation Pair.
+
+## 2.3 Evaluator
+
+### 2.3.1 Evaluator data structrues
+
 
 ## 3. Learning Note
 Some of the implementing details are kept in this "Learning Note" section
