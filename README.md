@@ -30,9 +30,7 @@ The second step is to convert the substring token into appropriate type. For sch
 
 At last, I find regex is extremely useful for tokenizer. Need to learn more about regex later.
 
-### 2.2  Parser, Syntactic analysis
-
-### 2.2.1 token stream and buffer
+### 2.2 token stream and buffer
 Parser will take tokens and convert them into proper expressions, i.e Javascript representation of expressions. The problem is that tokenizer's input is a line and output is a list of tokens. But a single expression can cross multiple lines.
 
 Thus, we need to create a buffer which accumulates tokens. It provides "current", "pop" and "hasMore" methods for parser to retrieve tokens. So parser is decoupled from I/O related job. Parser will only need to understand tokens and how to group tokens to form expressions.
@@ -41,15 +39,58 @@ The difficulty is that to implement "current", "pop" or "hasMore", it requires b
 
 This is not ideal. To improve performance, the callback should be triggered once there is token read from file, rather than waiting until finish reading the whole file.
 
-### 2.2.2 parse
-As described, parser should have method called "parse". Each time "parse" is called, it returns one expression parsed from token stream. It will be called multiple times until we get EOF exception.
+## 2.3 Parser, Syntactic analyze
+Parser's input is a token stream and output is expressions. So it is parser's responsibility to do
+syntactic analyze. Meaning, It needs to understand how tokens is grouped into a single expression
+and how a single expression can be used as subexpression to build a larger expression. 
 
-### 2.2.3 data structures
-After parsing, all scheme expressions will be converted to Pair. But evaluator can create abstraction to represent different scheme expressions which decoupe the internal representation Pair.
+### 2.3.1 AST
+I have not learned what is AST. But my guess is that it is a standard data structure used to parse
+tokens. As described previously tokens form expression. Then the expression can be used to build 
+a larger expression. So expression can be represented as a tree structure natually.
 
-## 2.3 Evaluator
+### 2.3.2 My implementation
+I guess normally parser's job is just to build AST. Then compiler will take AST to do rest of the 
+job, e.g code generation.
 
-### 2.3.1 Evaluator data structrues
+But for my current implementation, instead of returning AST, the "parseExpression" method will return "Pair", an internal representation of expression. So the result of "parseExpression" can be sent to 
+"evaluator" directly.
+
+Later, after I learned AST, I will modify it to generate AST.
+
+### 2.3.3 Algorithms
+Scheme is using "(", ")" to group tokens into expression. Each element inside "(", ")" can either be
+a symbol (base case) or a subexpression (compound case). The subexpression is again inside  "(", ")". 
+So it is natual to use recursion to solve the problem.
+
+The idea is to use two mutual recursive functions to parse the tokens: parseExpression, 
+parseCompoundExpressions.
+
+parseExpression: 
+  If the token is a symbol (base case), parseExpression will return the symbol directly.
+  if the token is "(", it will call parseCompoundExpression to parse the compound expression.
+
+parseCompoundExpression:
+  If the token is ")", it will return nil (base case). 
+  If the token is "(", which means the next element is again a compound expression. So we call
+    parseExpression to get first element and set it as Pair.left. Then call parseCompoundExpression
+    recursively and set the result as Pair.right.
+  If the token is symbol, set it as Pair.left. Then call parseCompoundExpression recursively and set
+    the result as Pair.right.
+
+### 2.3.4 usage
+As described previously, "parseExpression" takes a token stream as input and return an expression. 
+"parseExpression" should be called mulitple times by the user of Parser until all expressions in the 
+token steam has been parsed.
+
+
+### 2.3.5 data structures used by Parser
+Pair
+Nil
+
+## 2.4 Evaluator
+
+### 2.4.1 Evaluator data structrues
 
 
 ## 3. Learning Note
