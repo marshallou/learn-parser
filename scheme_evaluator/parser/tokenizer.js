@@ -71,11 +71,11 @@ function tokenize(line) {
     var tokens  = [];
 
     while (p2 < len) {
-        //generate token start from p1
+        //generate token starting from p1
         var c = line.charAt(p1);
 
         if (isSingleToken(c)) {
-            //tokenize a single token
+            //next token is a single char
             p2++;
             p1 = p2;
 
@@ -83,7 +83,7 @@ function tokenize(line) {
                 tokens.push(c);
             }
         } else if (isNumberStart(c)) {
-            //tokenize a number
+            //next token is a number
             p2++
             
             while (p2 < len && !isTokenEnd(line.charAt(p2))) {
@@ -101,7 +101,7 @@ function tokenize(line) {
             tokens.push(token);
             p1 = p2;
         } else if (isStringStart(c)) {
-
+            //next token is a string
             while (p2 < len && line.charAt(p2) !== "\"") {
                 p2++;
             }
@@ -110,7 +110,6 @@ function tokenize(line) {
             tokens.push(line.substring(p1, p2));
             p1 = p2;
         } else {
-            //normal token
             while (p2 < len && !isTokenEnd(line.charAt(p2))) {
                 p2++;
             }
