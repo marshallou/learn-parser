@@ -33,11 +33,13 @@ At last, I find regex is extremely useful for tokenizer. Need to learn more abou
 ### 2.2  Parser, Syntactic analysis
 
 ### 2.2.1 token stream and buffer
-Parser will take tokens and convert them into proper expressions, i.e data structures represented using Javascript. The problem is that tokenizer's input is a line and output is a list of tokens. But the expression is highly possible cross multiple lines.
+Parser will take tokens and convert them into proper expressions, i.e Javascript representation of expressions. The problem is that tokenizer's input is a line and output is a list of tokens. But a single expression can cross multiple lines.
 
-Thus, we need to create a buffer which accumulates tokens. When buffer is out of tokens, it will read more lines and calls tokenizer internally to store more tokens.
+Thus, we need to create a buffer which accumulates tokens. It provides "current", "pop" and "hasMore" methods for parser to retrieve tokens. So parser is decoupled from I/O related job. Parser will only need to understand tokens and how to group tokens to form expressions.
 
-Thus parser is decoupled from I/O related job and its input becomes a token stream. It is parser's job to understand tokens and group tokens to form expressions.
+The difficulty is that to implement "current", "pop" or "hasMore", it requires blocking call to readfile. But nodeJS is not designed to be blocking. So as tradeoff, the parser pass callback into buffer which will be triggered after buffer has read all lines of a file.
+
+This is not ideal. To improve performance, the callback should be triggered once there is token read from file, rather than waiting until finish reading the whole file.
 
 ### 2.2.2 parse
 As described, parser should have method called "parse". Each time "parse" is called, it returns one expression parsed from token stream. It will be called multiple times until we get EOF exception.
@@ -59,6 +61,9 @@ Some of the implementing details are kept in this "Learning Note" section
 ### JS/nodejs
 - use "require" and "module.exports" to import other JS files,
 - regex.test search to see if pattern exist. To match the whole string, we need to use "^" and "$"
+- path.join(__dirname) can be used to generate relative path
+- JS "this" is different than other language. In strict mode, this will be undefine if triggering without setting. Use "bind" or "apply" to set "this" (execution context). The difference of "bind" and "apply" is that "apply" accepts an array of argus while "call"'s argus are predefined.
+- array1.concat(array2) will not modify array1, it will create a new array which append elements of array2 to array1.
 
 
 ### parser
