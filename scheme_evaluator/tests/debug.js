@@ -5,19 +5,13 @@ var Buffer = require('../parser/buffer.js');
 const readline = require('readline')
 const fs = require('fs')
 var path = require('path')
-var testFilePath = path.join(__dirname, "buffer.test.txt");
+var testFilePath = path.join(__dirname, "buffer.debug.txt");
 const rl = readline.createInterface({
     input: fs.createReadStream(testFilePath, 'utf8')
 })
 
 var callback = function(buffer) {
-        var hasMore1 = buffer.hasMore();
-        var tok1 = buffer.current();
-        var tok2 = buffer.pop();
-        var tok3 = buffer.pop();
-        var hasMore2 = buffer.hasMore();
-        var tok4 = buffer.pop();
-        var hasMore3 = buffer.hasMore();
+        buffer.testTokens().forEach(token => console.log("token: " + token));
 }
 
 var buffer = new Buffer(rl, callback);

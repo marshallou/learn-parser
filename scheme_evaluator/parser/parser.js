@@ -1,4 +1,5 @@
+var Buffer = require('./buffer.js');
 
-function parse(tokens) {
+function parse(filePath) {
 
 }

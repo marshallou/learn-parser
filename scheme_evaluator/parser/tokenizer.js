@@ -18,11 +18,22 @@ function isStringStart(c) {
 }
 
 /**
+ * Whitespace and tab should not be considered as a valid token,
+ * they are used as delimiter in expression. So skip them when 
+ * searching token start.
+ * @param {string} c 
+ */
+function isSkippedToken(c) {
+    var skippedToken = new Set([" ", "\t"]);
+    return skippedToken.has(c);
+}
+
+/**
  * @param {string} c string with length = 1
  * return: true if the char is single token
  */
 function isSingleToken(c) {
-    var singleToken = new Set(["(", ")", ",", "'", " "]);
+    var singleToken = new Set(["(", ")", "'"]);
     return singleToken.has(c);
 }
 
@@ -31,7 +42,7 @@ function isSingleToken(c) {
  * return true if the char is Token end
  */
 function isTokenEnd(c) {
-    var tokenEnd = new Set([")", ",", " "]);
+    var tokenEnd = new Set([")", " ", "\t"]);
     return tokenEnd.has(c);
 }
 
@@ -74,14 +85,15 @@ function tokenize(line) {
         //generate token starting from p1
         var c = line.charAt(p1);
 
-        if (isSingleToken(c)) {
+        if (isSkippedToken(c)) {
+            p2++;
+            p1 = p2;
+        } else if (isSingleToken(c)) {
             //next token is a single char
             p2++;
             p1 = p2;
 
-            if (!isWhiteSpace(c)) {
-                tokens.push(c);
-            }
+            tokens.push(c);
         } else if (isNumberStart(c)) {
             //next token is a number
             p2++

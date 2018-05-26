@@ -77,4 +77,11 @@ module.exports = class Buffer {
         
         return current;
      }
+
+     /**
+      * used for testing
+      */
+     testTokens() {
+        return this.tokens;
+     }
 }
