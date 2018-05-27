@@ -12,20 +12,22 @@ const rl = readline.createInterface({
 })
 
 var callback = function(buffer) {
-    assert.equal(true, buffer.hasMore());
-    assert.equal("define", buffer.current());
-    assert.equal("define", buffer.pop());
-    assert.equal("a", buffer.pop());
-    assert.equal(true, buffer.hasMore());
-    assert.equal(b, buffer.pop());
-    assert.equal(false, buffer.hasMore());
+    describe("Buffer.js", function() {
+        it("Buffer test", function() {
+            assert.equal(true, buffer.hasMore());
+            assert.equal("define", buffer.current());
+            assert.equal("define", buffer.pop());
+            assert.equal("a", buffer.pop());
+            assert.equal(true, buffer.hasMore());
+            assert.equal("b", buffer.pop());
+            assert.equal(false, buffer.hasMore());
+        })
+    })
+
 }
 
-describe("Buffer.js", function() {
-    it("Buffer test", function() {
-        new Buffer(rl, callback);
-    })
-})
+new Buffer(rl, callback);
+
 
 describe("Buffer.js", function() {
     it("test NoTokenException works properly", function() {
