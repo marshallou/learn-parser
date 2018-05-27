@@ -8,7 +8,7 @@ class Pair {
 Pair.prototype.toString = function() {
     var left = this.left.toString();
     var right = this.right.toString();
-    return "Pair(" + left + ", " + right + ")";
+    return "(cons " + left + " " + right + ")";
 }
 
 class Nil {
@@ -16,7 +16,7 @@ class Nil {
 }
 
 Nil.prototype.toString = function() {
-    return "Nil";
+    return "()";
 }
 
 module.exports = {
