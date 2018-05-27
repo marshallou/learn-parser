@@ -27,9 +27,10 @@ class Buffer {
      
     /**
      * @param {readline.Interface} fileSource 
-     * @param {function} callback 
+     * @param {function} callback once read all tokens
+     * result
      */
-     constructor(fileSource, callback) {
+     constructor(fileSource, callback,) {
          this.fileSource = fileSource;
          this.callback = callback;
          this.tokens = [];

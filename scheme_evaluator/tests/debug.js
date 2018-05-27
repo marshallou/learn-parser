@@ -1,6 +1,7 @@
 var tokenizer = require('../parser/tokenizer.js');
 var Buffer = require('../parser/buffer.js').Buffer;
-var NoTokenException = require('../parser/buffer.js').NoTokenException;
+var Pair = require('../parser/data_structures.js').Pair;
+var Nil = require('../parser/data_structures.js').Nil;
 
 //init inputStream
 const readline = require('readline')
@@ -11,10 +12,12 @@ const rl = readline.createInterface({
     input: fs.createReadStream(testFilePath, 'utf8')
 })
 
-var callback = function(buffer) {
-        buffer.testTokens().forEach(token => console.log("token: " + token));
+function evalExpressions(exps) {
+    exps.forEach(exp => console.log(exp));
 }
 
-var buffer = new Buffer(rl, callback);
+var pair = new Pair("token1", new Pair("token2", new Nil()));
+console.log(pair.toString());
+//var buffer = new Buffer(rl, callback);
 
 

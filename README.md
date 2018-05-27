@@ -78,6 +78,11 @@ parseCompoundExpression:
   If the token is symbol, set it as Pair.left. Then call parseCompoundExpression recursively and set
     the result as Pair.right.
 
+Note: I do not define parseExpression and parseCompoundExpression as part of "Parser" class.
+Because I need to pass "parse" as callback to Buffer. Since parse will call "parseExpression"
+and "parseCompoundExpression", when writing code, I have to call bind "this" which looks 
+weird.
+
 ### 2.3.4 usage
 As described previously, "parseExpression" takes a token stream as input and return an expression. 
 "parseExpression" should be called mulitple times by the user of Parser until all expressions in the 
