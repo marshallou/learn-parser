@@ -16,7 +16,14 @@
  */
 var tokenizer = require('./tokenizer.js');
 
-module.exports = class Buffer {
+class NoTokenException {
+    constructor(message) {
+        this.message = message
+    }
+    
+}
+
+class Buffer {
      
     /**
      * @param {readline.Interface} fileSource 
@@ -84,4 +91,9 @@ module.exports = class Buffer {
      testTokens() {
         return this.tokens;
      }
+}
+
+module.exports = {
+    Buffer : Buffer,
+    NoTokenException : NoTokenException
 }

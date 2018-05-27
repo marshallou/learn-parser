@@ -1,5 +1,6 @@
 var tokenizer = require('../parser/tokenizer.js');
-var Buffer = require('../parser/buffer.js');
+var Buffer = require('../parser/buffer.js').Buffer;
+var NoTokenException = require('../parser/buffer.js').NoTokenException;
 
 //init inputStream
 const readline = require('readline')
@@ -15,3 +16,5 @@ var callback = function(buffer) {
 }
 
 var buffer = new Buffer(rl, callback);
+
+

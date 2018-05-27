@@ -1,4 +1,5 @@
-var Buffer = require('../parser/buffer.js');
+var Buffer = require('../parser/buffer.js').Buffer;
+var NoTokenException = require('../parser/buffer.js').NoTokenException;
 var assert = require('assert');
 
 //init inputStream
@@ -23,5 +24,17 @@ var callback = function(buffer) {
 describe("Buffer.js", function() {
     it("Buffer test", function() {
         new Buffer(rl, callback);
+    })
+})
+
+describe("Buffer.js", function() {
+    it("test NoTokenException works properly", function() {
+        
+        try {
+            throw new NoTokenException("hello");
+        } catch (e) {
+            assert.equal(true, e instanceof NoTokenException);
+        }
+
     })
 })
