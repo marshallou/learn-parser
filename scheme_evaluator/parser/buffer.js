@@ -26,12 +26,12 @@ class NoTokenException {
 class Buffer {
      
     /**
-     * @param {readline.Interface} fileSource 
+     * @param {readline.Interface} readlineStream 
      * @param {function} callback once read all tokens
      * result
      */
-     constructor(fileSource, callback,) {
-         this.fileSource = fileSource;
+     constructor(readlineStream, callback,) {
+         this.readlineStream = readlineStream;
          this.callback = callback;
          this.tokens = [];
          this.index = 0;
@@ -45,12 +45,12 @@ class Buffer {
       */
      waitOnReadLines() {
 
-        this.fileSource.on('line', function(line) {
+        this.readlineStream.on('line', function(line) {
             var tokensOfLine = tokenizer.tokenize(line);
             this.tokens = this.tokens.concat(tokensOfLine);
         }.bind(this))
 
-        this.fileSource.on('close', function() {
+        this.readlineStream.on('close', function() {
             this.callback(this);
         }.bind(this))
      }

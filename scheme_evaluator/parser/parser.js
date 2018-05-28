@@ -5,7 +5,10 @@ var Nil = require('./data_structures.js').Nil;
 
 /**
  * parse a single expression from token stream of buffer
- * @param {Buffer} buffer 
+ * @param {buffer} buffer 
+ * invariant: when start, buffer points to the start of current
+ * expression. After executing, it returns the current expression
+ * and buffer points to the start of next expression.
  */
 function parseExpression(buffer) {
 
@@ -24,44 +27,49 @@ function parseExpression(buffer) {
 
 /**
  * parse a compound expression from token stream of buffer
- * @param {Buffer} buffer 
+ * @param {buffer} buffer 
+ * invariant: When start, buffer points to the first element of compound
+ * expression. After executing, it returns the compound expression and 
+ * buffer points to the start of next expression.
  */
 function parseCompoundExpression(buffer) {
 
     if (buffer.hasMore()) {
-        var token = buffer.pop();
+        var token = buffer.current();
         var left;
 
         if (token === ")") {
+            buffer.pop();
             return new Nil();
         } else if (token === "(") {
-            left = parseExpression();
+            left = parseExpression(buffer);
         } else {
             left = token;
+            buffer.pop();
         }
-        var right = parseCompoundExpression();
+        var right = parseCompoundExpression(buffer);
         return new Pair(left, right);
     }
 
     throw new NoTokenException("no token when calling parseCompoundException");
 }
 
-module.export = class Parser {
+module.exports = class Parser {
 
     /**
      * given the source file and function to evaluate expression,
      * parser will parse the source file and call eval with parsed expression
-     * @param {readline.Interface} fileSource 
+     * @param {readline.Interface} readlineStream 
      * @param {function} evalExpressions
      */
-    constructor(fileSource, evalExpressions) {
+    constructor(readlineStream, evalExpressions) {
+        this.readlineStream = readlineStream;
         this.evalExpressions = evalExpressions
-        this.fileSource = fileSource;
         this.init();
     }
 
     init() {
-        new Buffer(this.fileSource, this.parse.bind(this));
+        new Buffer(this.readlineStream, this.parse.bind(this));
     }
 
     /**
@@ -76,13 +84,17 @@ module.export = class Parser {
 
             while (expression) {
                 expressions.push(expression);
+                expression = parseExpression(buffer);
             }
         } catch (e) {
-            if (e instanceof NoTokenException) {
+            if (e instanceof NoTokenException 
+                && expressions.length !== 0) {
+                //if read alll tokens and still not get an complete
+                //expression, it means missing parenthesis.
                 this.evalExpressions(expressions);
+            } else {
+                throw e;
             }
-
-            throw e;
         }
     }
 }
