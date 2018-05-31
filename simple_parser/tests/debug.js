@@ -1,7 +1,7 @@
-var tokenizer = require('../parser/tokenizer.js');
+var tokenizer = require('../tokenizer.js');
 
-var Buffer = require('../parser/buffer.js').Buffer;
-var Parser = require('../parser/parser.js');
+var Buffer = require('../buffer.js').Buffer;
+var Parser = require('../parser.js');
 
 //init inputStream
 const readline = require('readline')

@@ -1,4 +1,4 @@
-var tokenizer = require('../parser/tokenizer.js');
+var tokenizer = require('../tokenizer.js');
 var assert = require('assert');
 
 //isNumberStart tests:

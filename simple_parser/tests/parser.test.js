@@ -1,5 +1,5 @@
-var Buffer = require('../parser/buffer.js').Buffer;
-var Parser = require('../parser/parser.js');
+var Buffer = require('../buffer.js').Buffer;
+var Parser = require('../parser.js');
 var assert = require('assert');
 
 //config readlineStream

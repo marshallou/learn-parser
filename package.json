@@ -7,15 +7,12 @@
     "mocha": "^5.2.0"
   },
   "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/marshallou/learn-parser.git"
   },
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha scheme_evaluator/tests/*.js"
+    "test": "./node_modules/mocha/bin/mocha simple_parser/tests/*.js"
   },
   "keywords": [
     "parser"

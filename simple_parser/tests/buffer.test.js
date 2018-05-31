@@ -1,5 +1,5 @@
-var Buffer = require('../parser/buffer.js').Buffer;
-var NoTokenException = require('../parser/buffer.js').NoTokenException;
+var Buffer = require('../buffer.js').Buffer;
+var NoTokenException = require('../buffer.js').NoTokenException;
 var assert = require('assert');
 
 //init inputStream

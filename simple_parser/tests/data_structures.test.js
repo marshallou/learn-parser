@@ -1,5 +1,5 @@
-var Pair = require('../parser/data_structures.js').Pair;
-var Nil = require('../parser/data_structures.js').Nil;
+var Pair = require('../data_structures.js').Pair;
+var Nil = require('../data_structures.js').Nil;
 var assert = require('assert');
 
 describe("data_structures.js", function() {
