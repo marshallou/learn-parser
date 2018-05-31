@@ -4,7 +4,7 @@
 The parser will take scheme expression, tokenize it and transform tokens into internal data structure: Pair.. 
 
 Details can be found: 
-[scheme-evaluator](https://github.com/marshallou/learn-parser/tree/master/simple_parser)
+[simple-parser](https://github.com/marshallou/learn-parser/tree/master/simple_parser)
 
 ## 2. logical_programming
 logical programming is programming style which is different from normal programming style. Normal programming gives step by step procedure to interpretor/compiler and interpretor will execute those instructions to compute result. But logical programming does not care "how" the result is computed. It just describes what it compute. We call the thing to  be computed a "query".

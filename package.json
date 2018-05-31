@@ -12,7 +12,7 @@
     "url": "git+https://github.com/marshallou/learn-parser.git"
   },
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha simple_parser/tests/*.js"
+    "test": "./node_modules/mocha/bin/mocha simple_parser/tests/*.js logical_programming/tests/*.js"
   },
   "keywords": [
     "parser"

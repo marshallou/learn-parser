@@ -1,0 +1,4 @@
+(rule (live-near ?person-1 ?persion-2)
+          (and (address ?person-1 ?same-address)
+               (address ?person-2 ?same-address)
+               (not (same ?person-1 ?person-2))))
