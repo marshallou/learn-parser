@@ -1,5 +1,5 @@
 var Parser = require("../../simple_parser/parser.js");
-var DataUtils = require("../data_structures.js");
+var Rule = require("../data_structures/rule.js");
 
 var assert = require('assert');
 
@@ -7,7 +7,7 @@ var assert = require('assert');
 const readline = require('readline')
 const fs = require('fs')
 var path = require('path')
-var testFilePath = path.join(__dirname, "data_structures.test.txt");
+var testFilePath = path.join(__dirname, "rule.test.txt");
 const readlineStream = readline.createInterface({
     input: fs.createReadStream(testFilePath, 'utf8')
 })
@@ -17,9 +17,11 @@ function assertExpressions(exps) {
         it("test parser", function() {
             assert.equal(1, exps.length);
             var exp = exps[0];
-            assert.equal(true, DataUtils.isRule(exp));
-            assert.equal("live-near", DataUtils.getRuleName(exp));
-            assert.equal("and", DataUtils.getRuleBody(exp).left.left);
+            assert.equal(true, Rule.isRule(exp));
+            
+            var rule = new Rule(exp);
+            assert.equal("live-near", rule.ruleName());
+            assert.equal("and", rule.ruleBody().left.left);
         })
     })
 }
