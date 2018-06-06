@@ -3,6 +3,10 @@ module.exports = class Pattern {
         this.exp = exp;
     }
 
+    exp() {
+        return this.exp;
+    }
+    
     firstSymbol() {
         return this.exp.left;
     }

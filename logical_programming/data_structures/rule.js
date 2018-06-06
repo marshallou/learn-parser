@@ -16,6 +16,14 @@ module.exports = class Rule {
         this.exp = exp;
     }
 
+    exp() {
+        return this.exp;
+    }
+
+    ruleConclusion() {
+        return this.exp.right.left;
+    }
+
     ruleName() {
         return this.exp.right.left.left;
     }
