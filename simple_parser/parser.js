@@ -43,6 +43,20 @@ function parseCompoundExpression(buffer) {
             return new Nil();
         } else if (token === "(") {
             left = parseExpression(buffer);
+        } else if (token === ".") {
+            buffer.pop();
+
+            if (!buffer.hasMore()) {
+                throw new NoTokenException("there should be at least another token after '.'");
+            }
+
+            token = buffer.pop();
+
+            if (!buffer.hasMore() || buffer.pop() !== ")") {
+                throw new NoTokenException("there should be  a ')' after '. token'");
+            }
+
+            return token;
         } else {
             left = token;
             buffer.pop();
@@ -68,12 +82,17 @@ module.exports = class Parser {
         this.init();
     }
 
+    /**
+     * register "parse" method as callback to buffer so that after
+     * buffer finishes reading file, it will trigger "parse"
+     */
     init() {
         new Buffer(this.readlineStream, this.parse.bind(this));
     }
 
     /**
      * given the buffer, parse all its tokens into expressions.
+     * after parsing, triggering "evalExpressions" callback
      * @param {Buffer} buffer 
      */
     parse(buffer) {

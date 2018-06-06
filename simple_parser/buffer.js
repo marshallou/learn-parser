@@ -30,7 +30,7 @@ class Buffer {
      * @param {function} callback once read all tokens
      * result
      */
-     constructor(readlineStream, callback,) {
+     constructor(readlineStream, callback) {
          this.readlineStream = readlineStream;
          this.callback = callback;
          this.tokens = [];

@@ -44,7 +44,7 @@ module.exports = class Database {
      * @param {Pattern} pattern 
      */
     findAssertions(pattern) {
-        return this.assertionMap.get(pattern.firstSymbol);
+        return this.assertionMap.get(pattern.firstSymbol());
     }
 
     /**
@@ -53,7 +53,7 @@ module.exports = class Database {
      * @param {Pattern} pattern 
      */
     findRules(pattern) {
-        return this.ruleMap.get(pattern.firstSymbol)
+        return this.ruleMap.get(pattern.firstSymbol())
             .concat(this.ruleMap.get("?"));
     }
 }

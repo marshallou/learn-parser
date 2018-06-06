@@ -4,26 +4,42 @@ var Pair = require("../../simple_parser/data_structures.js").Pair;
 var Nil = require("../../simple_parser/data_structures.js").Nil;
 var Database = require("../database.js");
 var PatternMatcher = require("../pattern_matcher.js");
+var Parser = require("../../simple_parser/parser.js");
+var Pattern = require("../data_structures/pattern.js");
 
-//(rule (hello 2))
-var rule1 = new Rule(new Pair("rule", new Pair(new Pair("hello", new Pair("2", new Nil())), new Nil())));
+//config readlineStream to read rules
+const readline = require('readline')
+const fs = require('fs')
+var path = require('path')
+var testFilePath = path.join(__dirname, "debug.rules.test.txt");
+const ruleStream = readline.createInterface({
+    input: fs.createReadStream(testFilePath, 'utf8')
+})
 
-//(rule (hello ?x ?y))
-var rule2 = new Rule(new Pair("rule", 
-    new Pair(new Pair("hello", new Pair("?x", new Pair("?y", new Nil))), new Nil())));
+var db = new Database();
 
-//(x y)
-var pattern1 = new Pair("?x", new Pair("?y", new Nil()));
-var frame1 = new Frame();
-PatternMatcher.patternMatch(pattern1, rule1.ruleConclusion(), frame1);
-console.log(frame1.map);
+//add rules into database
+function addParsedExpressionIntoDatabase(expressions) {
+    expressions.forEach(ruleExp => {
+        db.addRule(new Rule(ruleExp));
+    });
 
-var pattern2 = new Pair("?x", "?y");
-var frame2 = new Frame();
-PatternMatcher.patternMatch(pattern2, rule1.ruleConclusion(), frame2);
-console.log(frame2);
+    readPattern();
+}
 
-var pattern3 = new Pair("hello", new Pair("?x", new Pair("?y", new Nil)));
-var frame3 = new Frame();
-PatternMatcher.patternMatch(pattern3, rule2.ruleConclusion(), frame3);
-console.log(frame3);
+new Parser(ruleStream, addParsedExpressionIntoDatabase);
+
+
+function readPattern() {
+    var testFilePath = path.join(__dirname, "debug.pattern.test.txt");
+    const patternStream = readline.createInterface({
+        input: fs.createReadStream(testFilePath, 'utf8')
+    })
+
+    function evalPattern(expressions) {
+        var pattern = new Pattern(expressions[0]);
+        var rules = db.findRules(pattern);
+        console.log(pattern);
+    }
+    new Parser(patternStream, evalPattern);
+}

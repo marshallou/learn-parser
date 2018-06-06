@@ -1,0 +1,4 @@
+(rule (append () ?y ?y))
+
+(rule (append (?u . ?v) ?y (?u . ?z))
+    (append ?v ?y ?z))
