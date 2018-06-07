@@ -6,6 +6,7 @@ var Database = require("../database.js");
 var PatternMatcher = require("../pattern_matcher.js");
 var Parser = require("../../simple_parser/parser.js");
 var Pattern = require("../data_structures/pattern.js");
+var QueryEvaluator = require("../query_evaluator.js");
 
 //config readlineStream to read rules
 const readline = require('readline')
@@ -39,7 +40,9 @@ function readPattern() {
     function evalPattern(expressions) {
         var pattern = new Pattern(expressions[0]);
         var rules = db.findRules(pattern);
-        console.log(pattern);
+        var frame = new Frame();
+        QueryEvaluator.eval(pattern, rules, frame);
+        console.log(QueryEvaluator.instantiatePattern(pattern.getExp(),frame).toString());
     }
     new Parser(patternStream, evalPattern);
 }

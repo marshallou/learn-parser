@@ -3,7 +3,7 @@ module.exports = class Pattern {
         this.exp = exp;
     }
 
-    exp() {
+    getExp() {
         return this.exp;
     }
     

@@ -16,7 +16,7 @@ module.exports = class Rule {
         this.exp = exp;
     }
 
-    exp() {
+    getExp() {
         return this.exp;
     }
 

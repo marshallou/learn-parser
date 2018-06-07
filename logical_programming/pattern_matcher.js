@@ -1,6 +1,7 @@
 var Pair = require("../simple_parser/data_structures.js").Pair;
 var Nil = require("../simple_parser/data_structures.js").Nil;
 var Frame = require("./data_structures/frame.js");
+var Rule = require("./data_structures/rule.js");
 
 function isPair(exp) {
     return exp instanceof Pair;
@@ -35,8 +36,6 @@ var id = 0;
  */
 function getCleanRuleExp(exp) {
 
-    var exp = rule.exp();
-
     if (isPatternVariable(exp)) {
         return exp + "-" + id;
     } else if (isPair(exp)) {
@@ -48,11 +47,11 @@ function getCleanRuleExp(exp) {
 
 function cleanRule(rule) {
     id++;
-    return new Rule(getCleanRuleExp(rule.exp()));
+    return new Rule(getCleanRuleExp(rule.getExp()));
 }
 
 function unification(pattern, rule, frame) {
-    return patternMatch(pattern.exp(), rule.ruleConclusion(), frame);
+    return patternMatch(pattern.getExp(), rule.ruleConclusion(), frame);
 }
 
 /**
@@ -81,10 +80,10 @@ function patternMatch(pattern, rule, frame) {
 
 function tryBind(patternVar, exp, frame) {
     if (frame.has(patternVar)) {
-        return patternMatch(value, exp, frame);
+        return patternMatch(frame.getBind(patternVar), exp, frame);
     } else if (isPatternVariable(exp)) {
         if (frame.has(exp)) {
-            return patternMatch(patternVar, frame.get(exp), frame);
+            return patternMatch(patternVar, frame.getBind(exp), frame);
         }
         frame.setBind(patternVar, exp);
         return true;
@@ -106,7 +105,7 @@ function dependsOn(patternVar, exp, frame) {
         }
 
         if (frame.has(exp)) {
-            return dependsOn(patternVar, frame.get(exp), frame);
+            return dependsOn(patternVar, frame.getBind(exp), frame);
         }
 
         return false;
@@ -120,5 +119,8 @@ function dependsOn(patternVar, exp, frame) {
 module.exports = {
     patternMatch: patternMatch,
     unification: unification,
-    cleanRule: cleanRule
+    cleanRule: cleanRule,
+    isPatternVariable: isPatternVariable,
+    isPair: isPair,
+    isSymbol: isSymbol
 }
