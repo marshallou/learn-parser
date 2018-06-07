@@ -1,6 +1,17 @@
 # learn logical programming
 ## 1 example of running local programming
+In tests/debug.rules.test.txt, I defined two rules:
 
+(rule (append () ?y ?y))
+
+(rule (append (?u . ?v) ?y (?u . ?z))
+    (append ?v ?y ?z))
+
+If I give a query pattern (append (a b) ?x (a b c d)) in tests/debug.pattern.test.text, the query evaluator will compute based on previous rules that ?x = (c d).
+
+If I geve a query pattern (append (a b) (c d) ?y), the query evaluator will compute that ?y = (a b c d)
+
+Generally, type other rules and pattern in those two files and run "debug.js" file will give scheme representation of the result.
 
 ## 2 Pattern match:
 The key part of logical programming is Pattern match. Pattern match is a procedure which takes two inputs: a pattern and rule.
